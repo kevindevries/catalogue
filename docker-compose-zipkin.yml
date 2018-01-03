@@ -28,7 +28,7 @@ services:
             - reschedule=on-node-failure
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
             - MYSQL_ALLOW_EMPTY_PASSWORD=true
-            - MYSQL_DATABASE=socksdb
+            - MYSQL_DATABASE=popdb
     zipkin:
         image: openzipkin/zipkin 
         hostname: zipkin

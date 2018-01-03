@@ -54,6 +54,9 @@ INSERT INTO tag (name) VALUES ("offer");
 INSERT INTO tag (name) VALUES ("cartoon");
 INSERT INTO tag (name) VALUES ("adult");
 INSERT INTO tag (name) VALUES ("classic");
+INSERT INTO tag (name) VALUES ("evil");
+INSERT INTO tag (name) VALUES ("fighting");
+INSERT INTO tag (name) VALUES ("beatemup");
 
 INSERT INTO pop_tag VALUES ("6d62d909-f957-430e-8689-b5129c0bb75e", "3");
 INSERT INTO pop_tag VALUES ("6d62d909-f957-430e-8689-b5129c0bb75e", "4");
@@ -71,6 +74,7 @@ INSERT INTO pop_tag VALUES ("03fef6ac-1896-4ce8-bd69-b798f85c6e0b", "7");
 INSERT INTO pop_tag VALUES ("d3588630-ad8e-49df-bbd7-3167f7efb246", "4");
 INSERT INTO pop_tag VALUES ("d3588630-ad8e-49df-bbd7-3167f7efb246", "7");
 INSERT INTO pop_tag VALUES ("d3588630-ad8e-49df-bbd7-3167f7efb246", "10");
+INSERT INTO pop_tag VALUES ("d3588630-ad8e-49df-bbd7-3167f7efb246", "12");
 INSERT INTO pop_tag VALUES ("819e1fbf-8b7e-4f6d-811f-693534916a8b", "7");
 INSERT INTO pop_tag VALUES ("819e1fbf-8b7e-4f6d-811f-693534916a8b", "9");
 INSERT INTO pop_tag VALUES ("zzz4f044-b040-410d-8ead-4de0446aec7e", "4");
@@ -87,8 +91,10 @@ INSERT INTO pop_tag VALUES ("4563d21e-442e-1a22-65ff-3575ee23a187", "2");
 INSERT INTO pop_tag VALUES ("4563d21e-442e-1a22-65ff-3575ee23a187", "8");
 INSERT INTO pop_tag VALUES ("75893ee2-3ae2-4e22-52aa-8902ea12f4d2", "2");
 INSERT INTO pop_tag VALUES ("75893ee2-3ae2-4e22-52aa-8902ea12f4d2", "11");
+INSERT INTO pop_tag VALUES ("75893ee2-3ae2-4e22-52aa-8902ea12f4d2", "13");
 INSERT INTO pop_tag VALUES ("3245ee39-3e21-6a11-628a-753a2284ef41", "2");
 INSERT INTO pop_tag VALUES ("3245ee39-3e21-6a11-628a-753a2284ef41", "11");
+INSERT INTO pop_tag VALUES ("3245ee39-3e21-6a11-628a-753a2284ef41", "14");
 
 
 
