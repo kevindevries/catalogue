@@ -36,8 +36,8 @@ func MakeEndpoints(s Service, tracer stdopentracing.Tracer) Endpoints {
 func MakeListEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(listRequest)
-		socks, err := s.List(req.Tags, req.Order, req.PageNum, req.PageSize)
-		return listResponse{Socks: socks, Err: err}, err
+		pops, err := s.List(req.Tags, req.Order, req.PageNum, req.PageSize)
+		return listResponse{Pops: pops, Err: err}, err
 	}
 }
 
@@ -54,8 +54,8 @@ func MakeCountEndpoint(s Service) endpoint.Endpoint {
 func MakeGetEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(getRequest)
-		sock, err := s.Get(req.ID)
-		return getResponse{Sock: sock, Err: err}, err
+		pop, err := s.Get(req.ID)
+		return getResponse{Pop: pop, Err: err}, err
 	}
 }
 
@@ -83,7 +83,7 @@ type listRequest struct {
 }
 
 type listResponse struct {
-	Socks []Sock `json:"sock"`
+	Pops []Pop `json:"pop"`
 	Err   error  `json:"err"`
 }
 
@@ -101,7 +101,7 @@ type getRequest struct {
 }
 
 type getResponse struct {
-	Sock Sock  `json:"sock"`
+	Pop Pop  `json:"pop"`
 	Err  error `json:"err"`
 }
 

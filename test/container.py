@@ -22,7 +22,7 @@ class CatalogueContainerTest(unittest.TestCase):
                 host=self.mysql_container_name,
                 env=[("MYSQL_ROOT_PASSWORD", ""),
                     ("MYSQL_ALLOW_EMPTY_PASSWORD", True),
-                    ("MYSQL_DATABASE", "socksdb")]
+                    ("MYSQL_DATABASE", "popdb")]
                 )
         # todo: a better way to ensure mysql is up
         sleep(30)

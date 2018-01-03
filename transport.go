@@ -134,11 +134,11 @@ func decodeListRequest(_ context.Context, r *http.Request) (interface{}, error) 
 }
 
 // encodeListResponse is distinct from the generic encodeResponse because our
-// clients expect that we will encode the slice (array) of socks directly,
+// clients expect that we will encode the slice (array) of pops directly,
 // without the wrapping response object.
 func encodeListResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	resp := response.(listResponse)
-	return encodeResponse(ctx, w, resp.Socks)
+	return encodeResponse(ctx, w, resp.Pops)
 }
 
 func decodeCountRequest(_ context.Context, r *http.Request) (interface{}, error) {
@@ -165,7 +165,7 @@ func encodeGetResponse(ctx context.Context, w http.ResponseWriter, response inte
 		encodeError(ctx, resp.Err, w)
 		return nil
 	}
-	return encodeResponse(ctx, w, resp.Sock)
+	return encodeResponse(ctx, w, resp.Pop)
 }
 
 func decodeTagsRequest(_ context.Context, r *http.Request) (interface{}, error) {

@@ -23,7 +23,7 @@ GOPATH=${PWD}/vendor
 $DOCKER_CMD run \
     --rm \
     --name test \
-    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /var/run/docker.pop:/var/run/docker.pop \
     -v $CODE_DIR:$CODE_DIR -w $CODE_DIR \
     -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID \
     -e TRAVIS_BRANCH=$TRAVIS_BRANCH \

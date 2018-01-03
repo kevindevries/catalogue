@@ -12,13 +12,13 @@ import (
 )
 
 var (
-	s1 = Sock{ID: "1", Name: "name1", Description: "description1", Price: 1.1, Count: 1, ImageURL: []string{"ImageUrl_11", "ImageUrl_21"}, ImageURL_1: "ImageUrl_11", ImageURL_2: "ImageUrl_21", Tags: []string{"odd", "prime"}, TagString: "odd,prime"}
-	s2 = Sock{ID: "2", Name: "name2", Description: "description2", Price: 1.2, Count: 2, ImageURL: []string{"ImageUrl_12", "ImageUrl_22"}, ImageURL_1: "ImageUrl_12", ImageURL_2: "ImageUrl_22", Tags: []string{"even", "prime"}, TagString: "even,prime"}
-	s3 = Sock{ID: "3", Name: "name3", Description: "description3", Price: 1.3, Count: 3, ImageURL: []string{"ImageUrl_13", "ImageUrl_23"}, ImageURL_1: "ImageUrl_13", ImageURL_2: "ImageUrl_23", Tags: []string{"odd", "prime"}, TagString: "odd,prime"}
-	s4 = Sock{ID: "4", Name: "name4", Description: "description4", Price: 1.4, Count: 4, ImageURL: []string{"ImageUrl_14", "ImageUrl_24"}, ImageURL_1: "ImageUrl_14", ImageURL_2: "ImageUrl_24", Tags: []string{"even"}, TagString: "even"}
-	s5 = Sock{ID: "5", Name: "name5", Description: "description5", Price: 1.5, Count: 5, ImageURL: []string{"ImageUrl_15", "ImageUrl_25"}, ImageURL_1: "ImageUrl_15", ImageURL_2: "ImageUrl_25", Tags: []string{"odd", "prime"}, TagString: "odd,prime"}
+	s1 = Pop{ID: "1", Name: "name1", Description: "description1", Price: 1.1, Count: 1, ImageURL: []string{"ImageUrl_11", "ImageUrl_21"}, ImageURL_1: "ImageUrl_11", ImageURL_2: "ImageUrl_21", Tags: []string{"odd", "prime"}, TagString: "odd,prime"}
+	s2 = Pop{ID: "2", Name: "name2", Description: "description2", Price: 1.2, Count: 2, ImageURL: []string{"ImageUrl_12", "ImageUrl_22"}, ImageURL_1: "ImageUrl_12", ImageURL_2: "ImageUrl_22", Tags: []string{"even", "prime"}, TagString: "even,prime"}
+	s3 = Pop{ID: "3", Name: "name3", Description: "description3", Price: 1.3, Count: 3, ImageURL: []string{"ImageUrl_13", "ImageUrl_23"}, ImageURL_1: "ImageUrl_13", ImageURL_2: "ImageUrl_23", Tags: []string{"odd", "prime"}, TagString: "odd,prime"}
+	s4 = Pop{ID: "4", Name: "name4", Description: "description4", Price: 1.4, Count: 4, ImageURL: []string{"ImageUrl_14", "ImageUrl_24"}, ImageURL_1: "ImageUrl_14", ImageURL_2: "ImageUrl_24", Tags: []string{"even"}, TagString: "even"}
+	s5 = Pop{ID: "5", Name: "name5", Description: "description5", Price: 1.5, Count: 5, ImageURL: []string{"ImageUrl_15", "ImageUrl_25"}, ImageURL_1: "ImageUrl_15", ImageURL_2: "ImageUrl_25", Tags: []string{"odd", "prime"}, TagString: "odd,prime"}
 
-	socks = []Sock{s1, s2, s3, s4, s5}
+	pop = []Pop{s1, s2, s3, s4, s5}
 	tags  = []string{"odd", "even", "prime"}
 )
 
@@ -61,28 +61,28 @@ func TestCatalogueServiceList(t *testing.T) {
 		order    string
 		pageNum  int
 		pageSize int
-		want     []Sock
+		want     []Pop
 	}{
 		{
 			tags:     []string{},
 			order:    "",
 			pageNum:  1,
 			pageSize: 5,
-			want:     []Sock{s1, s2, s3, s4, s5},
+			want:     []Pop{s1, s2, s3, s4, s5},
 		},
 		{
 			tags:     []string{},
 			order:    "tag",
 			pageNum:  1,
 			pageSize: 3,
-			want:     []Sock{s4, s1, s2},
+			want:     []Pop{s4, s1, s2},
 		},
 		{
 			tags:     []string{"odd"},
 			order:    "id",
 			pageNum:  2,
 			pageSize: 2,
-			want:     []Sock{s5},
+			want:     []Pop{s5},
 		},
 	} {
 		have, err := s.List(testcase.tags, testcase.order, testcase.pageNum, testcase.pageSize)
@@ -173,7 +173,7 @@ func TestCatalogueServiceGet(t *testing.T) {
 	}
 	{
 		// Success case
-		for id, want := range map[string]Sock{
+		for id, want := range map[string]Pop{
 			"3": s3,
 		} {
 			have, err := s.Get(id)
@@ -220,37 +220,37 @@ func TestCut(t *testing.T) {
 	for _, testcase := range []struct {
 		pageNum  int
 		pageSize int
-		want     []Sock
+		want     []Pop
 	}{
-		{0, 1, []Sock{}}, // pageNum 0 is invalid
-		{1, 0, []Sock{}}, // pageSize 0 is invalid
-		{1, 1, []Sock{s1}},
-		{1, 2, []Sock{s1, s2}},
-		{1, 5, []Sock{s1, s2, s3, s4, s5}},
-		{1, 9, []Sock{s1, s2, s3, s4, s5}},
-		{2, 0, []Sock{}},
-		{2, 1, []Sock{s2}},
-		{2, 2, []Sock{s3, s4}},
-		{2, 3, []Sock{s4, s5}},
-		{2, 4, []Sock{s5}},
-		{2, 5, []Sock{}},
-		{2, 6, []Sock{}},
-		{3, 0, []Sock{}},
-		{3, 1, []Sock{s3}},
-		{3, 2, []Sock{s5}},
-		{3, 3, []Sock{}},
-		{4, 1, []Sock{s4}},
-		{4, 2, []Sock{}},
+		{0, 1, []Pop{}}, // pageNum 0 is invalid
+		{1, 0, []Pop{}}, // pageSize 0 is invalid
+		{1, 1, []Pop{s1}},
+		{1, 2, []Pop{s1, s2}},
+		{1, 5, []Pop{s1, s2, s3, s4, s5}},
+		{1, 9, []Pop{s1, s2, s3, s4, s5}},
+		{2, 0, []Pop{}},
+		{2, 1, []Pop{s2}},
+		{2, 2, []Pop{s3, s4}},
+		{2, 3, []Pop{s4, s5}},
+		{2, 4, []Pop{s5}},
+		{2, 5, []Pop{}},
+		{2, 6, []Pop{}},
+		{3, 0, []Pop{}},
+		{3, 1, []Pop{s3}},
+		{3, 2, []Pop{s5}},
+		{3, 3, []Pop{}},
+		{4, 1, []Pop{s4}},
+		{4, 2, []Pop{}},
 	} {
-		have := cut(socks, testcase.pageNum, testcase.pageSize)
+		have := cut(pop, testcase.pageNum, testcase.pageSize)
 		if want := testcase.want; !reflect.DeepEqual(want, have) {
 			t.Errorf("cut(%d, %d): want %s, have %s", testcase.pageNum, testcase.pageSize, printIDs(want), printIDs(have))
 		}
 	}
 }
 
-// Make test output nicer: just print sock IDs.
-type printIDs []Sock
+// Make test output nicer: just print pop IDs.
+type printIDs []Pop
 
 func (s printIDs) String() string {
 	ids := make([]string, len(s))

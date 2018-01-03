@@ -13,11 +13,11 @@ import (
 )
 
 // Service is the catalogue service, providing read operations on a saleable
-// catalogue of sock products.
+// catalogue of pop products.
 type Service interface {
-	List(tags []string, order string, pageNum, pageSize int) ([]Sock, error) // GET /catalogue
+	List(tags []string, order string, pageNum, pageSize int) ([]Pop, error) // GET /catalogue
 	Count(tags []string) (int, error)                                        // GET /catalogue/size
-	Get(id string) (Sock, error)                                             // GET /catalogue/{id}
+	Get(id string) (Pop, error)                                             // GET /catalogue/{id}
 	Tags() ([]string, error)                                                 // GET /tags
 	Health() []Health                                                        // GET /health
 }
@@ -25,8 +25,8 @@ type Service interface {
 // Middleware decorates a Service.
 type Middleware func(Service) Service
 
-// Sock describes the thing on offer in the catalogue.
-type Sock struct {
+// Pop describes the thing on offer in the catalogue.
+type Pop struct {
 	ID          string   `json:"id" db:"id"`
 	Name        string   `json:"name" db:"name"`
 	Description string   `json:"description" db:"description"`
@@ -46,13 +46,13 @@ type Health struct {
 	Time    string `json:"time"`
 }
 
-// ErrNotFound is returned when there is no sock for a given ID.
+// ErrNotFound is returned when there is no pop for a given ID.
 var ErrNotFound = errors.New("not found")
 
 // ErrDBConnection is returned when connection with the database fails.
 var ErrDBConnection = errors.New("database connection error")
 
-var baseQuery = "SELECT sock.sock_id AS id, sock.name, sock.description, sock.price, sock.count, sock.image_url_1, sock.image_url_2, GROUP_CONCAT(tag.name) AS tag_name FROM sock JOIN sock_tag ON sock.sock_id=sock_tag.sock_id JOIN tag ON sock_tag.tag_id=tag.tag_id"
+var baseQuery = "SELECT pop.pop_id AS id, pop.name, pop.description, pop.price, pop.count, pop.image_url_1, pop.image_url_2, GROUP_CONCAT(tag.name) AS tag_name FROM pop JOIN pop_tag ON pop.pop_id=pop_tag.pop_id JOIN tag ON pop_tag.tag_id=tag.tag_id"
 
 // NewCatalogueService returns an implementation of the Service interface,
 // with connection to an SQL database.
@@ -68,8 +68,8 @@ type catalogueService struct {
 	logger log.Logger
 }
 
-func (s *catalogueService) List(tags []string, order string, pageNum, pageSize int) ([]Sock, error) {
-	var socks []Sock
+func (s *catalogueService) List(tags []string, order string, pageNum, pageSize int) ([]Pop, error) {
+	var pop []Pop
 	query := baseQuery
 
 	var args []interface{}
@@ -93,26 +93,26 @@ func (s *catalogueService) List(tags []string, order string, pageNum, pageSize i
 
 	query += ";"
 
-	err := s.db.Select(&socks, query, args...)
+	err := s.db.Select(&pop, query, args...)
 	if err != nil {
 		s.logger.Log("database error", err)
-		return []Sock{}, ErrDBConnection
+		return []Pop{}, ErrDBConnection
 	}
-	for i, s := range socks {
-		socks[i].ImageURL = []string{s.ImageURL_1, s.ImageURL_2}
-		socks[i].Tags = strings.Split(s.TagString, ",")
+	for i, s := range pop {
+		pop[i].ImageURL = []string{s.ImageURL_1, s.ImageURL_2}
+		pop[i].Tags = strings.Split(s.TagString, ",")
 	}
 
 	// DEMO: Change 0 to 850
 	time.Sleep(0 * time.Millisecond)
 
-	socks = cut(socks, pageNum, pageSize)
+	pop = cut(pop, pageNum, pageSize)
 
-	return socks, nil
+	return pop, nil
 }
 
 func (s *catalogueService) Count(tags []string) (int, error) {
-	query := "SELECT COUNT(DISTINCT sock.sock_id) FROM sock JOIN sock_tag ON sock.sock_id=sock_tag.sock_id JOIN tag ON sock_tag.tag_id=tag.tag_id"
+	query := "SELECT COUNT(DISTINCT pop.pop_id) FROM pop JOIN pop_tag ON pop.pop_id=pop_tag.pop_id JOIN tag ON pop_tag.tag_id=tag.tag_id"
 
 	var args []interface{}
 
@@ -147,20 +147,20 @@ func (s *catalogueService) Count(tags []string) (int, error) {
 	return count, nil
 }
 
-func (s *catalogueService) Get(id string) (Sock, error) {
-	query := baseQuery + " WHERE sock.sock_id =? GROUP BY sock.sock_id;"
+func (s *catalogueService) Get(id string) (Pop, error) {
+	query := baseQuery + " WHERE pop.pop_id =? GROUP BY pop.pop_id;"
 
-	var sock Sock
-	err := s.db.Get(&sock, query, id)
+	var pop Pop
+	err := s.db.Get(&pop, query, id)
 	if err != nil {
 		s.logger.Log("database error", err)
-		return Sock{}, ErrNotFound
+		return Pop{}, ErrNotFound
 	}
 
-	sock.ImageURL = []string{sock.ImageURL_1, sock.ImageURL_2}
-	sock.Tags = strings.Split(sock.TagString, ",")
+	pop.ImageURL = []string{pop.ImageURL_1, pop.ImageURL_2}
+	pop.Tags = strings.Split(pop.TagString, ",")
 
-	return sock, nil
+	return pop, nil
 }
 
 func (s *catalogueService) Health() []Health {
@@ -201,19 +201,19 @@ func (s *catalogueService) Tags() ([]string, error) {
 	return tags, nil
 }
 
-func cut(socks []Sock, pageNum, pageSize int) []Sock {
+func cut(pop []Pop, pageNum, pageSize int) []Pop {
 	if pageNum == 0 || pageSize == 0 {
-		return []Sock{} // pageNum is 1-indexed
+		return []Pop{} // pageNum is 1-indexed
 	}
 	start := (pageNum * pageSize) - pageSize
-	if start > len(socks) {
-		return []Sock{}
+	if start > len(pop) {
+		return []Pop{}
 	}
 	end := (pageNum * pageSize)
-	if end > len(socks) {
-		end = len(socks)
+	if end > len(pop) {
+		end = len(pop)
 	}
-	return socks[start:end]
+	return pop[start:end]
 }
 
 func contains(s []string, e string) bool {

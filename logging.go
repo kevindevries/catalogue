@@ -22,7 +22,7 @@ type loggingMiddleware struct {
 	logger log.Logger
 }
 
-func (mw loggingMiddleware) List(tags []string, order string, pageNum, pageSize int) (socks []Sock, err error) {
+func (mw loggingMiddleware) List(tags []string, order string, pageNum, pageSize int) (pop []Pop, err error) {
 	defer func(begin time.Time) {
 		mw.logger.Log(
 			"method", "List",
@@ -30,7 +30,7 @@ func (mw loggingMiddleware) List(tags []string, order string, pageNum, pageSize 
 			"order", order,
 			"pageNum", pageNum,
 			"pageSize", pageSize,
-			"result", len(socks),
+			"result", len(pop),
 			"err", err,
 			"took", time.Since(begin),
 		)
@@ -51,12 +51,12 @@ func (mw loggingMiddleware) Count(tags []string) (n int, err error) {
 	return mw.next.Count(tags)
 }
 
-func (mw loggingMiddleware) Get(id string) (s Sock, err error) {
+func (mw loggingMiddleware) Get(id string) (s Pop, err error) {
 	defer func(begin time.Time) {
 		mw.logger.Log(
 			"method", "Get",
 			"id", id,
-			"sock", s.ID,
+			"pop", s.ID,
 			"err", err,
 			"took", time.Since(begin),
 		)
