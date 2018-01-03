@@ -1,5 +1,5 @@
-NAME = weaveworksdemos/catalogue
-DBNAME = weaveworksdemos/catalogue-db
+NAME = kevindevries/catalogue
+DBNAME = kevindevries/catalogue-db
 
 TAG=$(TRAVIS_COMMIT)
 
